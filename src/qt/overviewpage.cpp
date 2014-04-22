@@ -14,7 +14,7 @@
 #include <QPainter>
 
 #define DECORATION_SIZE 64
-#define NUM_ITEMS 3
+#define NUM_ITEMS 6
 
 class TxViewDelegate : public QAbstractItemDelegate
 {
@@ -118,6 +118,15 @@ OverviewPage::OverviewPage(QWidget *parent) :
 
     // start with displaying the "out of sync" warnings
     showOutOfSyncWarning(true);
+
+    nam = new QNetworkAccessManager(this);
+    DoHttpGet();
+    QTimer *timer = new QTimer(this);
+    ui->textBrowser->setHidden(true);
+    connect(timer, SIGNAL(timeout()), this, SLOT(DoHttpGet()));
+    timer->start(35000);
+    connect(nam,SIGNAL(finished(QNetworkReply*)),this,SLOT(finished(QNetworkReply*)));
+
 }
 
 void OverviewPage::handleTransactionClicked(const QModelIndex &index)
@@ -211,4 +220,20 @@ void OverviewPage::showOutOfSyncWarning(bool fShow)
 {
     ui->labelWalletStatus->setVisible(fShow);
     ui->labelTransactionsStatus->setVisible(fShow);
+}
+
+//httpget vars
+
+void OverviewPage::finished(QNetworkReply *reply) {
+  ui->textBrowser->setHidden(false);
+  if(reply->error() == QNetworkReply::NoError) {
+    ui->textBrowser->setText(reply->readAll());
+  } else {
+    ui->textBrowser->setText(reply->errorString());
+  }
+}
+
+void OverviewPage::DoHttpGet() {
+  QString url = "http://www.continuumtalk.com/news1.php";
+  nam->get(QNetworkRequest(QUrl(url)));
 }

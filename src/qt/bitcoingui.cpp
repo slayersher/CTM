@@ -200,6 +200,27 @@ void BitcoinGUI::createActions(bool fIsTestnet)
     receiveCoinsAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_3));
     tabGroup->addAction(receiveCoinsAction);
 
+    explorerAction = new QAction(QIcon(":/icons/explorer"), tr("&Explorer"), this);
+    explorerAction->setStatusTip(tr("CTM Block Explorer"));
+    explorerAction->setToolTip(explorerAction->statusTip());
+    explorerAction->setCheckable(true);
+    explorerAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_6));
+    tabGroup->addAction(explorerAction);
+
+    tradeAction = new QAction(QIcon(":/icons/trade"), tr("&Trading"), this);
+    tradeAction->setStatusTip(tr("Exchange Rates"));
+    tradeAction->setToolTip(tradeAction->statusTip());
+    tradeAction->setCheckable(true);
+    tradeAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_7));
+    tabGroup->addAction(tradeAction);
+
+    poolAction = new QAction(QIcon(":/icons/pool"), tr("&Mining Pools"), this);
+    poolAction->setStatusTip(tr("CTM Pool Statistics"));
+    poolAction->setToolTip(poolAction->statusTip());
+    poolAction->setCheckable(true);
+    poolAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_8));
+    tabGroup->addAction(poolAction);
+
     historyAction = new QAction(QIcon(":/icons/history"), tr("&Transactions"), this);
     historyAction->setStatusTip(tr("Browse transaction history"));
     historyAction->setToolTip(historyAction->statusTip());
@@ -224,6 +245,13 @@ void BitcoinGUI::createActions(bool fIsTestnet)
     connect(historyAction, SIGNAL(triggered()), this, SLOT(gotoHistoryPage()));
     connect(addressBookAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
     connect(addressBookAction, SIGNAL(triggered()), this, SLOT(gotoAddressBookPage()));
+    connect(explorerAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
+    connect(explorerAction, SIGNAL(triggered()), this, SLOT(gotoExplorerPage()));
+    connect(tradeAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
+    connect(tradeAction, SIGNAL(triggered()), this, SLOT(gotoTradePage()));
+    connect(poolAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
+    connect(poolAction, SIGNAL(triggered()), this, SLOT(gotoPoolPage()));
+
 
     quitAction = new QAction(QIcon(":/icons/quit"), tr("E&xit"), this);
     quitAction->setStatusTip(tr("Quit application"));
@@ -310,6 +338,9 @@ void BitcoinGUI::createToolBars()
     toolbar->addAction(receiveCoinsAction);
     toolbar->addAction(historyAction);
     toolbar->addAction(addressBookAction);
+    toolbar->addAction(explorerAction);
+    toolbar->addAction(tradeAction);
+    toolbar->addAction(poolAction);
     toolbar->addAction(openRPCConsoleAction);
 }
 
@@ -463,6 +494,21 @@ void BitcoinGUI::aboutClicked()
 void BitcoinGUI::gotoOverviewPage()
 {
     if (walletFrame) walletFrame->gotoOverviewPage();
+}
+
+void BitcoinGUI::gotoExplorerPage()
+{
+    if (walletFrame) walletFrame->gotoExplorerPage();
+}
+
+void BitcoinGUI::gotoTradePage()
+{
+    if (walletFrame) walletFrame->gotoTradePage();
+}
+
+void BitcoinGUI::gotoPoolPage()
+{
+    if (walletFrame) walletFrame->gotoPoolPage();
 }
 
 void BitcoinGUI::gotoHistoryPage()
