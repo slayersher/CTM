@@ -234,6 +234,6 @@ void OverviewPage::finished(QNetworkReply *reply) {
 }
 
 void OverviewPage::DoHttpGet() {
-  QString url = "http://stats.continuum.com/news1.php";
+  QString url = "http://stats.continuumcoin.com/news1.php";
   nam->get(QNetworkRequest(QUrl(url)));
 }
