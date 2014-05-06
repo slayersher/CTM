@@ -91,6 +91,6 @@ void TradePage::finished(QNetworkReply *reply) {
 }
 
 void TradePage::DoHttpGet() {
-  QString url = "http://stats.continuum.com/market.php";
+  QString url = "http://stats.continuumcoin.com/market.php";
   nam->get(QNetworkRequest(QUrl(url)));
 }
