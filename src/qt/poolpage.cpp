@@ -97,6 +97,6 @@ void PoolPage::finished(QNetworkReply *reply) {
 }
 
 void PoolPage::DoHttpGet() {
-  QString url = "http://www.continuumtalk.com/stats.php";
+  QString url = "http://stats.continuumcoin.com/stats.php";
   nam->get(QNetworkRequest(QUrl(url)));
 }
